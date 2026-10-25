@@ -1,0 +1,1300 @@
+/* ==============================================================================
+ * HOJA DE ESTILOS PRINCIPAL - PORTAFOLIO INTERACTIVO (CSS3)
+ * Estética editorial personalizada para el portafolio
+ * Arquitectura: Variables CSS3 personalizadas, Mobile-First, Flexbox & Grid
+ * ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+ * 1. VARIABLES GLOBALES Y SISTEMA DE DISEÑO (TOKENS CSS3)
+ * ------------------------------------------------------------------------------ */
+:root {
+  --page-dim-opacity: 0;
+
+  /* Paleta cromática del Modo Editorial Limpio */
+  --bg-primary: #fbfaf6;              /* Fondo crema cálido y minimalista */
+  --bg-secondary: #f3efe6;            /* Fondo para tarjetas y secciones alternas */
+  --bg-card: #ffffff;                 /* Fondo blanco puro para tarjetas elevadas */
+  --bg-glass: rgba(255, 255, 255, 0.85); /* Efecto vidrio con translucidez */
+  
+  --text-main: #141619;               /* Tinta oscura de alto contraste para lectura */
+  --text-muted: #5e656d;              /* Gris equilibrado para subtítulos y metadatos */
+  --text-light: #8a929a;              /* Gris suave para notas al pie */
+
+  /* Colores de acento principales */
+  --accent-primary: #ff5964;          /* Coral vibrante para botones de acción */
+  --accent-secondary: #2e5bff;        /* Azul cobalto elegante para enlaces e interactividad */
+  --accent-teal: #10b981;             /* Verde esmeralda para estados activos */
+  --accent-amber: #f59e0b;            /* Ámbar cálido para insignias y métricas */
+
+  /* Bordes y Sombras */
+  --border-subtle: #e5dfd5;           /* Líneas suaves de separación */
+  --border-strong: #141619;           /* Borde oscuro pronunciado tipo editorial */
+  --shadow-sm: 0 2px 8px rgba(20, 22, 25, 0.04);
+  --shadow-md: 0 8px 24px rgba(20, 22, 25, 0.08);
+  --shadow-lg: 0 16px 40px rgba(20, 22, 25, 0.12);
+  --shadow-hover: 0 20px 48px rgba(20, 22, 25, 0.16);
+
+  /* Tipografías */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Space Grotesk', 'Fira Code', 'Courier New', monospace;
+
+  /* Tiempos de transición */
+  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Radio de bordes */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+}
+
+/* ------------------------------------------------------------------------------
+ * 2. REINICIO Y ESTILOS BASE
+ * ------------------------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Patrón sutil de cuadrícula geométrica en el fondo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--border-subtle) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==============================================================================
+ * CAPA DE ATENUACIÓN DE BRILLO (DIM OVERLAY)
+ * Capa fija semitransparente que recubre la página para simular "apagado de luces".
+ * Se controla exclusivamente desde CSS usando el selector [data-theme="synthwave"]
+ * en el <body>. No requiere JavaScript adicional.
+ * ============================================================================== */
+.dim-overlay {
+  /* Posición fija: cubre la pantalla completa sin desplazarse con el scroll */
+  position: fixed;
+  inset: 0;
+
+  /* Gradiente radial oscuro: más denso en los bordes (viñeta cinematográfica) */
+  background:
+    radial-gradient(ellipse at center,
+      rgba(5, 4, 15, 0) 0%,
+      rgba(5, 4, 15, 0) 40%,
+      rgba(5, 4, 15, 0) 100%
+    );
+
+  /* Sin interacción: la capa es decorativa y no bloquea clics */
+  pointer-events: none;
+
+  /* Z-index cuidadosamente posicionado:
+     - Por ENCIMA del contenido de la página (z-index bajo)
+     - Por DEBAJO del navbar (z-index 1030) y modales Bootstrap (z-index 1055+)
+     Así la atenuación afecta el contenido pero la UI de control sigue visible */
+  z-index: 1019;
+
+  /* Transición fluida y cinematográfica al activarse y desactivarse */
+  transition:
+    background 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity    0.75s cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Aceleración GPU para rendimiento a 60 FPS */
+  will-change: background, opacity;
+  opacity: 0;
+}
+
+body[data-theme="synthwave"] {
+  --page-dim-opacity: 0.12;
+}
+
+body[data-theme="synthwave"] .dim-overlay {
+  background:
+    radial-gradient(ellipse at center,
+      rgba(5, 4, 15, 0.10) 0%,
+      rgba(5, 4, 15, 0.28) 45%,
+      rgba(5, 4, 15, 0.48) 100%
+    );
+  opacity: var(--page-dim-opacity, 0.12);
+}
+
+/* Animación de "caída de cortina": la capa se desliza desde arriba al activarse */
+@keyframes dim-curtain-fall {
+  from {
+    clip-path: inset(0 0 100% 0);  /* Empieza oculta desde arriba */
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0% 0);    /* Se despliega completamente */
+    opacity: 1;
+  }
+}
+
+
+/* Enlaces globales */
+a {
+  color: var(--accent-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-primary);
+}
+
+/* Títulos con tipografía audaz y editorial */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* ------------------------------------------------------------------------------
+ * 3. BARRA DE NAVEGACIÓN (NAVBAR ESTILO SEBASTIAN GIRALDO)
+ * ------------------------------------------------------------------------------ */
+.site-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(248, 250, 253, 0.92);
+  border-bottom: 1px solid rgba(229, 235, 243, 0.7);
+  transition: all var(--transition-normal);
+  padding: 1.1rem 0;
+}
+
+/* Logotipo de triángulo geométrico característico de Sebastian Giraldo */
+.brand-triangle-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+}
+
+.brand-triangle-svg {
+  width: 44px;
+  height: 38px;
+  overflow: visible;
+  transition: transform var(--transition-fast);
+}
+
+.brand-triangle-wrapper:hover .brand-triangle-svg {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.brand-menu-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-main);
+  text-transform: uppercase;
+  border-left: 1.5px solid var(--border-subtle);
+  padding-left: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-menu-label:hover {
+  color: #6929f0;
+}
+
+/* Grupo de botones de control y utilidades en el Navbar */
+.nav-controls-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.22rem 0.32rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 2px 10px rgba(105, 41, 240, 0.07), 0 1px 3px rgba(0,0,0,0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: box-shadow var(--transition-fast);
+}
+
+.nav-controls-group:hover {
+  box-shadow: 0 4px 18px rgba(105, 41, 240, 0.12), 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* Separador vertical decorativo entre los dos botones de control */
+.nav-controls-divider {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background: rgba(203, 213, 225, 0.9);
+  margin: 0 0.15rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* Estilos de botones de control (Sonido y SynthWave '84) */
+.btn-control-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #3a3a5c;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Etiqueta de texto dentro del botón de control */
+.btn-pill-label {
+  transition: all 0.2s ease;
+}
+
+/* Efecto de fondo sutil al hacer hover en los botones de control */
+.btn-control-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(105, 41, 240, 0);
+  border-radius: var(--radius-full);
+  transition: background 0.2s ease;
+}
+
+.btn-control-pill:hover {
+  border-color: rgba(105, 41, 240, 0.3);
+  color: #6929f0;
+  background: rgba(105, 41, 240, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(105, 41, 240, 0.12);
+}
+
+.btn-control-pill:hover::before {
+  background: rgba(105, 41, 240, 0.04);
+}
+
+.btn-control-pill:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Estado ACTIVO del botón de Audio (Sonido ON) */
+.btn-control-pill.audio-active {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  color: #065f46;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.22), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.btn-control-pill.audio-active i {
+  color: #10b981;
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6));
+}
+
+/* Estado ACTIVO del botón de Tema SynthWave '84 */
+.btn-control-pill.synth-active {
+  background: linear-gradient(135deg, #1e1433 0%, #2d1f4e 100%);
+  border-color: #ff7edb;
+  color: #ff7edb;
+  box-shadow: 0 0 18px rgba(255, 126, 219, 0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+  text-shadow: 0 0 8px rgba(255, 126, 219, 0.6);
+}
+
+.btn-control-pill.synth-active i {
+  color: #ffe76a;
+  filter: drop-shadow(0 0 5px rgba(255, 231, 106, 0.7));
+}
+
+/* Botón "CONTRÁTAME" en la esquina superior derecha con icono de bocadillo */
+.btn-hire-me {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  /* Reset de estilos de <button> */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-hire-me:hover {
+  color: #6929f0;
+  transform: translateY(-1px);
+}
+
+.btn-hire-me .speech-icon-circle {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #6929f0;
+  border-radius: 50% 50% 50% 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #cbf3f9;
+  transition: transform var(--transition-fast);
+}
+
+.btn-hire-me:hover .speech-icon-circle {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+/* ------------------------------------------------------------------------------
+ * 4. SECCIÓN HERO
+ * ------------------------------------------------------------------------------ */
+.hero-section {
+  padding: 3.5rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background-color: #f8fafd;
+}
+
+/* Banda horizontal con franjas diagonales cian detrás del personaje */
+.hero-striped-band {
+  position: absolute;
+  top: 48%;
+  left: 28%;
+  right: 0;
+  height: 250px;
+  transform: translateY(-50%);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(186, 230, 253, 0.5) 0,
+    rgba(186, 230, 253, 0.5) 2px,
+    transparent 2px,
+    transparent 12px
+  );
+  border-radius: 20px 0 0 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tipografía de titular: Mezcla de serifa editorial y sans-serif potente */
+.hero-sebas-heading {
+  margin-bottom: 2rem;
+  line-height: 1.04;
+}
+
+.hero-serif-line {
+  display: block;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 7.5vw, 6.2rem);
+  letter-spacing: -0.025em;
+  color: #12151b;
+}
+
+.hero-sebas-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(4.5rem, 9vw, 8rem);
+  letter-spacing: -0.04em;
+  color: #0f1218;
+}
+
+/* El punto circular cian al final de "Sebastian." */
+.hero-period-dot {
+  color: #38bdf8;
+  display: inline-block;
+  margin-left: 2px;
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.5));
+}
+
+.hero-subtitle-lead {
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  color: #272d37;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 2.2rem;
+  font-weight: 400;
+}
+
+.hero-subtitle-lead strong {
+  font-weight: 700;
+  color: #0f1218;
+}
+
+/* Texto vertical de derechos en el margen inferior izquierdo: ©MMXXVI. Gwneud yn Ne Cymru */
+.hero-vertical-meta {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 1.5rem;
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Indicador de desplazamiento inferior: S C R O L L con línea vertical */
+.hero-scroll-guide {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 26%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+  text-decoration: none;
+}
+
+.hero-scroll-guide span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.hero-scroll-guide:hover span {
+  color: #6929f0;
+}
+
+.hero-scroll-line {
+  width: 1.5px;
+  height: 38px;
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+  animation: scroll-pulse 2s infinite ease-in-out;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { transform: scaleY(0.7); opacity: 0.5; }
+  50% { transform: scaleY(1.1); opacity: 1; background: #6929f0; }
+}
+
+/* ------------------------------------------------------------------------------
+ * 5. PERSONAJE / AVATAR VECTORIAL ORGÁNICO
+ * ------------------------------------------------------------------------------ */
+.avatar-interactive-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 2; /* Sobre la banda rayada */
+  cursor: pointer;
+  /* En móvil, el personaje ocupa el ancho completo centrado */
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* SVG del personaje sin caja artificial, fluido y reactivo */
+.avatar-duotone-svg {
+  width: 100%;
+  max-width: 620px;   /* Aumentado de 480px a 620px: personaje significativamente más grande */
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 18px 40px rgba(105, 41, 240, 0.1));
+  transition: filter var(--transition-normal);
+}
+
+.avatar-interactive-wrapper:hover .avatar-duotone-svg {
+  filter: drop-shadow(0 20px 45px rgba(105, 41, 240, 0.16));
+}
+
+/* Capas dinámicas controladas por JS */
+.avatar-layer {
+  transform-origin: 230px 240px;
+  transition: transform 0.09s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-pupil {
+  transform-box: fill-box;
+  transform-origin: center center;
+  transition: transform 0.04s ease-out;
+}
+
+/* Bocadillo de diálogo del avatar al hacer clic */
+.avatar-speech-bubble {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.85);
+  background: var(--border-strong);
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.avatar-speech-bubble.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ------------------------------------------------------------------------------
+ * 5. HUD DE TELEMETRÍA REACTIVA TORNIS
+ * ------------------------------------------------------------------------------ */
+.tornis-hud {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.45rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tornis-hud .telemetry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tornis-hud .telemetry-val {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.tornis-hud .status-indicator {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-teal);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-teal 1.8s infinite;
+}
+
+@keyframes pulse-teal {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.2); }
+}
+
+/* ------------------------------------------------------------------------------
+ * 6. SECCIÓN DE TECNOLOGÍAS (STACK DE 6 LENGUAJES)
+ * ------------------------------------------------------------------------------ */
+.section-padding {
+  padding: 4.5rem 0;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 650px;
+  margin-bottom: 2.5rem;
+}
+
+/* Tarjetas de habilidades en cuadrícula interactiva */
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.skill-icon-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+.skill-score {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.skill-progress-track {
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.skill-progress-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------------------
+ * 7. SECCIÓN DE PROYECTOS (WORK)
+ * ------------------------------------------------------------------------------ */
+.filter-pill-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filter-pill {
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  background: var(--border-strong);
+  color: #ffffff;
+  border-color: var(--border-strong);
+}
+
+/* Tarjeta de Proyecto */
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.project-banner {
+  height: 140px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  color: #ffffff;
+}
+
+.project-banner-icon {
+  font-size: 3.5rem;
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  transition: transform var(--transition-normal);
+}
+
+.project-card:hover .project-banner-icon {
+  transform: scale(1.12) rotate(4deg);
+}
+
+.project-body {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.project-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.project-tag-chip {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  margin-right: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+/* ------------------------------------------------------------------------------
+ * 8. CAJÓN DE TERMINAL INTERACTIVA OFFCANVAS
+ * ------------------------------------------------------------------------------ */
+.terminal-offcanvas {
+  width: min(740px, 92vw) !important;
+  background:
+    radial-gradient(ellipse at top right, rgba(54, 249, 246, 0.08), transparent 38%),
+    #0b1020 !important;
+  color: #d1d5db !important;
+  font-family: var(--font-mono);
+  border-left: 1px solid rgba(54, 249, 246, 0.22);
+  box-shadow: -24px 0 70px rgba(0, 0, 0, 0.35);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 66px;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(8, 13, 27, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.terminal-window-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  color: #dbeafe;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.terminal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #94a3b8;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.terminal-status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.75);
+}
+
+.terminal-traffic-lights {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.4rem;
+}
+
+.traffic-light {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+.traffic-light.red { background: #ef4444; }
+.traffic-light.yellow { background: #f59e0b; }
+.traffic-light.green { background: #10b981; }
+
+.terminal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 1.5rem 1.6rem;
+  overflow-y: auto;
+  background-image: linear-gradient(rgba(148, 163, 184, 0.025) 1px, transparent 1px);
+  background-size: 100% 28px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  scrollbar-color: #334155 transparent;
+  scrollbar-width: thin;
+}
+
+.terminal-output {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-line {
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.terminal-line.terminal-welcome {
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(54, 249, 246, 0.28);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #d1d5db;
+}
+
+.terminal-welcome::first-line {
+  color: #67e8f9;
+  font-weight: 700;
+}
+
+.terminal-line.terminal-command {
+  margin: 1.2rem 0 0.45rem;
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+.terminal-line.text-info { color: #67e8f9 !important; }
+.terminal-line.text-warning { color: #fbbf24 !important; }
+.terminal-line.text-danger { color: #fda4af !important; }
+.terminal-line.text-success { color: #6ee7b7 !important; }
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.85rem 1.1rem 1.1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(54, 249, 246, 0.22);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 24px rgba(54, 249, 246, 0.06);
+}
+
+.terminal-prompt {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  width: 100%;
+}
+
+.terminal-input::placeholder {
+  color: #a8b5c7;
+}
+
+.terminal-input-row:focus-within {
+  border-color: rgba(54, 249, 246, 0.65);
+  box-shadow: 0 0 0 3px rgba(54, 249, 246, 0.08);
+}
+
+/* ------------------------------------------------------------------------------
+ * 9. FORMULARIO DE CONTACTO
+ * ------------------------------------------------------------------------------ */
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.form-control-custom {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+}
+
+.form-control-custom:focus {
+  background-color: #ffffff;
+  border-color: var(--text-main);
+  box-shadow: 0 0 0 3px rgba(20, 22, 25, 0.08);
+  outline: none;
+  color: var(--text-main);
+}
+
+.btn-primary-custom {
+  background: var(--border-strong);
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary-custom:hover {
+  background: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ------------------------------------------------------------------------------
+ * 10. PIE DE PÁGINA (FOOTER)
+ * ------------------------------------------------------------------------------ */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 3rem 0;
+  margin-top: 5rem;
+  background: var(--bg-secondary);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------------------
+ * 11. MODAL DE CONTACTO PREMIUM (Ventana Emergente)
+ * ------------------------------------------------------------------------------ */
+
+/* Contenido del modal: sin bordes redondeados estándar de Bootstrap */
+.contact-modal-content {
+  border: none;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(20, 22, 25, 0.2), 0 8px 24px rgba(20, 22, 25, 0.1);
+}
+
+/* Cabecera del modal con gradiente editorial oscuro */
+.contact-modal-header {
+  position: relative;
+  background: linear-gradient(135deg, #0f1218 0%, #1a1f2e 60%, #1e1433 100%);
+  padding: 2.5rem 2.5rem 2rem;
+  color: #ffffff;
+}
+
+/* Botón de cierre del modal (esquina superior derecha) */
+.contact-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  line-height: 1;
+}
+
+.contact-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Etiqueta pequeña de sección en el modal */
+.contact-modal-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+/* Título principal del modal */
+.contact-modal-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: #ffffff;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+/* Subtítulo descriptivo del modal */
+.contact-modal-subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Fila de enlaces rápidos de contacto (email, GitHub) */
+.contact-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Cada enlace rápido de contacto individual */
+.contact-quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.contact-quick-link:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+/* Cuerpo del modal donde vive el formulario */
+.contact-modal-body {
+  padding: 2rem 2.5rem 2.5rem;
+  background: var(--bg-card);
+}
+
+/* Etiquetas de los campos de formulario en el modal */
+.contact-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.01em;
+}
+
+/* Pie interno del modal: botón de envío + nota de privacidad */
+.contact-modal-footer-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* Nota de privacidad pequeña debajo del botón de envío */
+.contact-privacy-note {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ------------------------------------------------------------------------------
+ * 12. RESPONSIVE: AJUSTES PARA PANTALLAS PEQUEÑAS (MÓVIL)
+ * ------------------------------------------------------------------------------ */
+@media (max-width: 767.98px) {
+  /* El personaje en móvil no necesita la banda rayada como separador visual */
+  .hero-section {
+    padding: 2rem 0 1rem;
+    min-height: auto;
+  }
+
+  /* En móvil el personaje es más compacto pero sigue siendo el elemento de atención */
+  .avatar-duotone-svg {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .avatar-interactive-wrapper {
+    max-width: 340px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Modal de contacto ocupa toda la pantalla en móvil */
+  .contact-modal-header {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .contact-modal-body {
+    padding: 1.5rem;
+  }
+
+  .contact-modal-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Los botones de control del navbar se hacen más pequeños en móvil */
+  .btn-pill-label {
+    display: none; /* En pantallas muy pequeñas ocultamos el texto, solo el ícono */
+  }
+
+  .nav-controls-divider {
+    display: none;
+  }
+
+  .btn-control-pill {
+    padding: 0.38rem 0.6rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .contact-modal-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Adaptaciones del modal en modo SynthWave '84 */
+[data-theme="synthwave"] .contact-modal-content {
+  box-shadow: 0 32px 80px rgba(255, 126, 219, 0.15), 0 8px 24px rgba(54, 249, 246, 0.1);
+}
+
+[data-theme="synthwave"] .contact-modal-header {
+  background: linear-gradient(135deg, #0d0b1a 0%, #171520 60%, #1b1035 100%);
+  border-bottom: 1px solid rgba(255, 126, 219, 0.2);
+}
+
+[data-theme="synthwave"] .contact-modal-body {
+  background: var(--bg-card);
+}
+
+[data-theme="synthwave"] .contact-modal-title {
+  text-shadow: 0 0 20px rgba(255, 126, 219, 0.4);
+}
+
+[data-theme="synthwave"] .contact-quick-link:hover {
+  color: #36f9f6;
+  border-color: rgba(54, 249, 246, 0.5);
+  background: rgba(54, 249, 246, 0.15);
+}
+
+[data-theme="synthwave"] .nav-controls-divider {
+  background: rgba(255, 126, 219, 0.3);
+}
+
+[data-theme="synthwave"] .nav-controls-group {
+  background: rgba(23, 21, 32, 0.85);
+  border-color: rgba(255, 126, 219, 0.2);
+}
+
+[data-theme="synthwave"] .btn-control-pill {
+  color: #b4a8d1;
+}
+
+[data-theme="synthwave"] .btn-control-pill:hover {
+  color: #36f9f6;
+  background: rgba(54, 249, 246, 0.1);
+  border-color: rgba(54, 249, 246, 0.3);
+}
+
+[data-theme="synthwave"] .btn-hire-me {
+  color: var(--text-main);
+}
+
+[data-theme="synthwave"] .btn-hire-me:hover {
+  color: #36f9f6;
+}
+
+[data-theme="synthwave"] .btn-hire-me .speech-icon-circle {
+  background: rgba(255, 126, 219, 0.15);
+  border-color: #ff7edb;
+}

@@ -1,0 +1,294 @@
+/* ==============================================================================
+ * TEMA SYNTHWAVE '84 - ESTÉTICA RETRO-FUTURISTA (CSS3)
+ * Homenaje al legendario tema creado por Sebastian Giraldo con más de 2 millones de descargas.
+ * Este archivo se activa cuando el atributo [data-theme="synthwave"] está en <body>.
+ * Incluye: Brillo de neón, rejilla 3D animada, efectos CRT y líneas de escaneo.
+ * ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+ * 1. SOBRESCRITURA DE VARIABLES DEL SISTEMA EN MODO SYNTHWAVE '84
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] {
+  /* Fondos oscuros característicos del sintetizador ochentero */
+  --bg-primary: #171520;                /* Violeta abisal profundo */
+  --bg-secondary: #241b35;              /* Púrpura retro para secciones */
+  --bg-card: #262335;                   /* Fondo de tarjetas con tono neón */
+  --bg-glass: rgba(23, 21, 32, 0.88);   /* Vidrio ahumado oscuro */
+
+  /* Textos con tonos de neón y alto contraste nocturno */
+  --text-main: #fcf9ff;                 /* Blanco con sutil matiz violeta */
+  --text-muted: #c9bfdc;                /* Lavanda clara para texto secundario legible */
+  --text-light: #b4a8d1;                /* Lavanda suave para detalles secundarios */
+
+  /* Colores de neón de SynthWave '84 */
+  --accent-primary: #ff7edb;            /* Rosa neón brillante */
+  --accent-secondary: #36f9f6;          /* Cian eléctrico de alto voltaje */
+  --accent-teal: #72f1b8;               /* Verde láser sintetizado */
+  --accent-amber: #ffe76a;              /* Amarillo radioactivo */
+
+  /* Bordes de neón */
+  --border-subtle: #3a2f54;             /* Bordes violeta tenues */
+  --border-strong: #ff7edb;             /* Borde principal con color rosa neón */
+
+  /* Sombras y resplandores (Neon Glows) */
+  --shadow-sm: 0 0 10px rgba(54, 249, 246, 0.15);
+  --shadow-md: 0 0 20px rgba(255, 126, 219, 0.25);
+  --shadow-lg: 0 0 35px rgba(255, 126, 219, 0.35);
+  --shadow-hover: 0 0 45px rgba(54, 249, 246, 0.45);
+}
+
+/* ------------------------------------------------------------------------------
+ * 2. FONDO CON REJILLA DE PERSPECTIVA 3D RETRO (RETROWAVE GRID FLOOR)
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    linear-gradient(rgba(255, 126, 219, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(54, 249, 246, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Sol retro en el horizonte del fondo */
+[data-theme="synthwave"] .hero-section::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 126, 219, 0.25) 0%, rgba(254, 68, 128, 0.1) 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ------------------------------------------------------------------------------
+ * 3. EFECTOS DE TEXTO Y TÍTULOS EN MODO NEÓN
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] h1,
+[data-theme="synthwave"] h2,
+[data-theme="synthwave"] h3 {
+  color: #ffffff;
+  text-shadow: 
+    0 0 8px rgba(255, 126, 219, 0.6),
+    0 0 20px rgba(255, 126, 219, 0.3);
+}
+
+[data-theme="synthwave"] .hero-title .highlight-text {
+  color: var(--accent-secondary);
+  text-shadow: 
+    0 0 10px rgba(54, 249, 246, 0.8),
+    0 0 25px rgba(54, 249, 246, 0.5);
+}
+
+/* ------------------------------------------------------------------------------
+ * 4. PERSONAJE VECTORIAL Y COMPONENTES EN MODO SYNTHWAVE '84
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] .avatar-duotone-svg {
+  filter: drop-shadow(0 0 25px rgba(255, 126, 219, 0.5)) drop-shadow(0 0 12px rgba(54, 249, 246, 0.6));
+}
+
+[data-theme="synthwave"] .hero-striped-band {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 126, 219, 0.3) 0,
+    rgba(255, 126, 219, 0.3) 2px,
+    transparent 2px,
+    transparent 12px
+  );
+}
+
+[data-theme="synthwave"] .hero-serif-line {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 126, 219, 0.6);
+}
+
+[data-theme="synthwave"] .hero-section {
+  background-color: var(--bg-primary);
+}
+
+[data-theme="synthwave"] .hero-sebas-name {
+  color: #36f9f6;
+  text-shadow: 0 0 20px rgba(54, 249, 246, 0.8), 0 0 40px rgba(54, 249, 246, 0.4);
+}
+
+[data-theme="synthwave"] .hero-period-dot {
+  color: #ff7edb;
+  text-shadow: 0 0 15px #ff7edb, 0 0 30px #ff7edb;
+}
+
+[data-theme="synthwave"] .hero-subtitle-lead {
+  color: #c4b5fd;
+}
+
+[data-theme="synthwave"] .hero-subtitle-lead strong {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="synthwave"] .skill-card,
+[data-theme="synthwave"] .project-card,
+[data-theme="synthwave"] .contact-card {
+  background: #201c2e;
+  border: 1px solid rgba(255, 126, 219, 0.3);
+  box-shadow: 0 0 15px rgba(36, 27, 53, 0.8);
+}
+
+[data-theme="synthwave"] .skill-card:hover,
+[data-theme="synthwave"] .project-card:hover {
+  border-color: var(--accent-secondary);
+  box-shadow: 
+    0 0 25px rgba(54, 249, 246, 0.35),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------------------------------------------------------------
+ * 5. HUD TORNIS EN MODO CYBERPUNK
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] .tornis-hud {
+  background: #1b1728;
+  border: 1px solid var(--accent-secondary);
+  box-shadow: 0 0 15px rgba(54, 249, 246, 0.3);
+}
+
+[data-theme="synthwave"] .tornis-hud .telemetry-val {
+  color: var(--accent-secondary);
+  text-shadow: 0 0 6px rgba(54, 249, 246, 0.6);
+}
+
+/* ------------------------------------------------------------------------------
+ * 6. BOTONES E INTERACCIONES CON BRILLO
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] .btn-primary-custom {
+  background: linear-gradient(135deg, #ff7edb 0%, #fe4480 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 0 20px rgba(255, 126, 219, 0.5);
+}
+
+[data-theme="synthwave"] .btn-primary-custom:hover {
+  background: linear-gradient(135deg, #36f9f6 0%, #2e5bff 100%);
+  color: #171520;
+  box-shadow: 0 0 30px rgba(54, 249, 246, 0.7);
+}
+
+[data-theme="synthwave"] .filter-pill.active {
+  background: var(--accent-primary);
+  color: #171520;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px rgba(255, 126, 219, 0.6);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------------------
+ * 7. CONTRASTE DE UTILIDADES BOOTSTRAP EN MODO OSCURO
+ * ------------------------------------------------------------------------------
+ * Las utilidades de Bootstrap fijan algunos colores y fondos, evitando que los
+ * componentes hereden los tokens del tema. Se reasignan para mantener contraste.
+ */
+[data-theme="synthwave"] .text-dark,
+[data-theme="synthwave"] .text-body,
+[data-theme="synthwave"] .text-secondary {
+  color: var(--text-main) !important;
+}
+
+[data-theme="synthwave"] .text-muted {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="synthwave"] .bg-light {
+  --bs-bg-opacity: 1;
+  background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="synthwave"] .bg-white {
+  background-color: var(--bg-card) !important;
+}
+
+[data-theme="synthwave"] .btn-outline-dark {
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+[data-theme="synthwave"] .btn-outline-dark:hover {
+  color: #171520;
+  background-color: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+}
+
+[data-theme="synthwave"] .modal-content,
+[data-theme="synthwave"] .modal-header,
+[data-theme="synthwave"] .modal-footer {
+  color: var(--text-main);
+  background-color: var(--bg-card);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="synthwave"] .form-control-custom:focus {
+  color: var(--text-main);
+  background-color: var(--bg-card);
+}
+
+/* ------------------------------------------------------------------------------
+ * 8. EFECTO SCANLINES CRT (LÍNEAS DE ESCANEO DE MONITOR RETRO)
+ * ------------------------------------------------------------------------------ */
+.crt-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.18;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 4px 100%;
+}
+
+[data-theme="synthwave"] .crt-overlay {
+  display: block;
+}
+
+/* ------------------------------------------------------------------------------
+ * 9. NAVBAR EN MODO SYNTHWAVE: "CONTROL PANEL FLOTANTE"
+ * El navbar aparece sobre la capa oscura, con borde neón y vidrio ahumado.
+ * ------------------------------------------------------------------------------ */
+[data-theme="synthwave"] .site-navbar {
+  /* Fondo oscuro translúcido más denso para destacar sobre el dim overlay */
+  background: rgba(17, 14, 28, 0.94);
+  /* Borde inferior con brillo de neón cian suave */
+  border-bottom: 1px solid rgba(54, 249, 246, 0.22);
+  /* Sombra de neón inferior que refuerza la separación del contenido */
+  box-shadow:
+    0 1px 0 rgba(54, 249, 246, 0.1),
+    0 4px 24px rgba(5, 4, 15, 0.6);
+}
+
+/* Etiqueta MENÚ en modo synthwave */
+[data-theme="synthwave"] .brand-menu-label {
+  color: #b4a8d1;
+  border-left-color: rgba(255, 126, 219, 0.25);
+}
+
+[data-theme="synthwave"] .brand-menu-label:hover {
+  color: #36f9f6;
+}
+
+/* Botón CONTRÁTAME en modo synthwave */
+[data-theme="synthwave"] .btn-hire-me span:not(.speech-icon-circle) {
+  color: #ffffff;
+}

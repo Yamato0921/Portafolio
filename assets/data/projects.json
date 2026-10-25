@@ -1,0 +1,171 @@
+[
+  {
+    "id": "synthwave-84",
+    "title": "SynthWave '84 IDE & Web Playground",
+    "subtitle": "The iconic retro-futuristic theme reimagined for modern web tools",
+    "category": "creative",
+    "featured": true,
+    "year": "2024",
+    "stars": "2M+ DLs",
+    "description": "Inspirado en la estética retro-futurista de SynthWave '84. Un playground de desarrollo interactivo con brillo neón CSS3, efectos CRT scanlines, renderizado en tiempo real y paleta de colores de los años 80.",
+    "longDescription": "SynthWave '84 revolucionó la personalización en VS Code y el desarrollo creativo. Este proyecto lleva la estética retro-futurista a un entorno web interactivo completo, implementando transformaciones CSS3 tridimensionales, filtros SVG de distorsión cromática, scanlines procedurales y un sintetizador de audio analógico con Web Audio API.",
+    "tags": ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
+    "metrics": {
+      "downloads": "2,450,000+",
+      "rating": "4.9/5",
+      "performance": "100/100 Lighthouse"
+    },
+    "features": [
+      "Efecto de brillo neón retro-futurista con CSS3 puro",
+      "Interruptor de curvatura CRT y líneas de barrido (scanlines)",
+      "Motor de audio Web Audio API para retroalimentación táctil",
+      "Diseño adaptable y responsivo con componentes Bootstrap 5"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#synthwave-demo"
+    },
+    "gradient": "linear-gradient(135deg, #ff7edb 0%, #36f9f6 100%)",
+    "icon": "bi-palette-fill"
+  },
+  {
+    "id": "tornis-viewport",
+    "title": "Tornis: Sensor & Viewport Engine",
+    "subtitle": "Motor reactivo de telemetría del viewport y tracking del cursor",
+    "category": "creative",
+    "featured": true,
+    "year": "2024",
+    "stars": "1.4k Stars",
+    "description": "Una biblioteca ligera que escucha el estado del viewport del navegador (posición del mouse, velocidad de scroll, dimensiones y orientación) y despacha eventos fluidos a 60fps.",
+    "longDescription": "Tornis desacopla los listeners pesados de la ventana usando un único bucle de animación con requestAnimationFrame. Proporciona una tienda de datos unificada para interacciones complejas de parallax, seguimiento ocular de avatares SVG e interfaces espaciales.",
+    "tags": ["JavaScript", "HTML5", "CSS3"],
+    "metrics": {
+      "fps": "60 FPS constante",
+      "bundleSize": "1.8 KB minified",
+      "latency": "< 4ms response"
+    },
+    "features": [
+      "Monitoreo de velocidad y aceleración del cursor",
+      "Detección de inercia y dirección de desplazamiento",
+      "Estructura desacoplada con patrón Pub/Sub reactivo",
+      "Soporte para giroscopio y acelerómetro en móviles"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#telemetry-hud"
+    },
+    "gradient": "linear-gradient(135deg, #2e5bff 0%, #00d2ff 100%)",
+    "icon": "bi-speedometer2"
+  },
+  {
+    "id": "omnistack-php-py",
+    "title": "OmniStack: Hybrid PHP & Python Backend Hub",
+    "subtitle": "Microservicios en Python coordinados con API REST en PHP 8",
+    "category": "fullstack",
+    "featured": true,
+    "year": "2025",
+    "stars": "Production Ready",
+    "description": "Arquitectura híbrida de alto rendimiento que combina la velocidad de procesamiento de formularios y enrutamiento en PHP con un microservicio de análisis y telemetría en Python.",
+    "longDescription": "Este sistema une lo mejor de dos mundos: PHP 8 gestiona las solicitudes de contacto, validación CSRF, seguridad y entrega de plantillas dinámicas, mientras que el microservicio en Python calcula estadísticas de código en tiempo real, análisis de lenguajes y procesamiento asíncrono con respuestas en JSON.",
+    "tags": ["PHP", "Python", "JavaScript", "Bootstrap"],
+    "metrics": {
+      "endpoints": "8 REST Endpoints",
+      "csrfSecurity": "Token SHA-256",
+      "asyncJobs": "Zero External Deps"
+    },
+    "features": [
+      "Endpoint PHP seguro con protección honeypot y sanitización",
+      "Microservicio HTTP nativo en Python 3 para telemetría",
+      "CLI interactiva en consola para administración del portafolio",
+      "Comunicación bidireccional cliente-servidor mediante Fetch API"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#terminal-section"
+    },
+    "gradient": "linear-gradient(135deg, #7952b3 0%, #3776ab 100%)",
+    "icon": "bi-cpu-fill"
+  },
+  {
+    "id": "rekishi-navigator",
+    "title": "Rekishi: History & Transition Controller",
+    "subtitle": "Navegación SPA fluida sobre la History API de HTML5",
+    "category": "creative",
+    "featured": false,
+    "year": "2024",
+    "stars": "500+ Stars",
+    "description": "Envoltorio minimalista sobre la HTML5 History API con arquitectura pub/sub que orquesta transiciones de página cinematográficas sin recargas lentas.",
+    "longDescription": "Rekishi permite crear transiciones fluidas de página interceptando enlaces y sincronizando el estado del DOM con la barra de direcciones. Incluye soporte para animaciones de entrada/salida coordinadas mediante CSS3 Custom Properties.",
+    "tags": ["HTML5", "JavaScript", "CSS3"],
+    "metrics": {
+      "transitions": "Sin parpadeo FOUC",
+      "cache": "LRU InMemory Cache"
+    },
+    "features": [
+      "Interceptación declarativa de rutas con data-attributes",
+      "Persistencia de estado en memoria y LocalStorage",
+      "Sincronización fluida con las animaciones de CSS3"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#projects"
+    },
+    "gradient": "linear-gradient(135deg, #ff5964 0%, #f9b233 100%)",
+    "icon": "bi-arrow-left-right"
+  },
+  {
+    "id": "code-matrix-py",
+    "title": "PyTelemetry: Code Matrix & AST Analyzer",
+    "subtitle": "Herramienta de análisis estático y telemetría de código en Python",
+    "category": "python",
+    "featured": false,
+    "year": "2025",
+    "stars": "CLI & Web",
+    "description": "Script de análisis de código en Python que inspecciona proyectos, calcula métricas de líneas efectivas, complejidad y genera informes visuales para la interfaz web.",
+    "longDescription": "Implementado utilizando el módulo ast y librerías estándar de Python 3. Evalúa la estructura del proyecto en c:\\src\\Portafolio, calcula la distribución de tecnologías (HTML5, CSS3, JS, PHP, Python) y sirve los datos a través del microservicio REST local.",
+    "tags": ["Python", "JavaScript", "Bootstrap"],
+    "metrics": {
+      "filesParsed": "50+ Files",
+      "executionTime": "< 15ms",
+      "stdLib": "100% Nativo"
+    },
+    "features": [
+      "Inspección de proyectos mediante árboles sintácticos (AST)",
+      "Cálculo en vivo de la distribución de tecnologías utilizadas",
+      "Generación de reportes en formato JSON y tablas ANSI para consola"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#terminal-section"
+    },
+    "gradient": "linear-gradient(135deg, #3776ab 0%, #ffd43b 100%)",
+    "icon": "bi-file-code-fill"
+  },
+  {
+    "id": "bootstrap-aura-ui",
+    "title": "Aura Design System & Bootstrap Framework",
+    "subtitle": "Sistema de diseño accesible con tokens personalizados y modo dual",
+    "category": "fullstack",
+    "featured": false,
+    "year": "2024",
+    "stars": "Awwwards Nominee",
+    "description": "Sistema de componentes modulares basado en Bootstrap 5 que añade soporte para glassmorphism, tipografía fluida y conmutación entre modo editorial limpio y SynthWave '84.",
+    "longDescription": "Reinterpreta las utilidades y componentes de Bootstrap 5 con un sistema de tokens en CSS3 puro. Ofrece una experiencia visual de alto impacto manteniendo estándares estrictos de accesibilidad WCAG AAA y contrastes de color óptimos.",
+    "tags": ["Bootstrap", "CSS3", "HTML5", "JavaScript"],
+    "metrics": {
+      "contrastRatio": "7:1 WCAG AAA",
+      "responsive": "Mobile, Tablet, 4K"
+    },
+    "features": [
+      "Cuadrícula responsiva de 12 columnas con contenedores fluidos",
+      "Cajones Offcanvas accesibles para menú móvil y consola interactiva",
+      "Tarjetas interactivas con efecto de inclinación 3D (tilt) con CSS3"
+    ],
+    "links": {
+      "github": "https://github.com/Yamato0921",
+      "demo": "#about"
+    },
+    "gradient": "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+    "icon": "bi-layers-fill"
+  }
+]

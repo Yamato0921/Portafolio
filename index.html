@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- ==============================================================================
+   * METADATOS Y SEO - PORTAFOLIO INTERACTIVO (HTML5)
+   * Portafolio personal de Sebastian Giraldo
+   * Tecnologías: HTML5, CSS3, JavaScript, PHP, Bootstrap 5 y Python
+   * ============================================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="portfolio-runtime" content="auto">
+  <title>Sebastian Giraldo | Desarrollador Creativo Independiente & Arquitecto Web</title>
+  <meta name="description"
+    content="Portafolio interactivo de desarrollo web creativo de Sebastian Giraldo. Diseñado con HTML5, CSS3, JavaScript, PHP, Bootstrap 5 y Python.">
+  <meta name="author" content="Sebastian Giraldo">
+  <meta name="keywords"
+    content="desarrollador creativo, portafolio interactivo, sebastian giraldo, synthwave 84, tornis, html5, css3, javascript, php, bootstrap, python">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Open Graph para redes sociales -->
+  <meta property="og:title" content="Sebastian Giraldo | Desarrollador Creativo Independiente">
+  <meta property="og:description"
+    content="Ayudo a personas y organizaciones a construir proyectos web ambiciosos pero accesibles. Cuanto más salvajes, mejor.">
+  <meta property="og:type" content="website">
+
+  <!-- Tipografías de Google Fonts: Outfit, Space Grotesk y Playfair Display (Serifa editorial) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS y Bootstrap Icons desde CDN de alta velocidad -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Hojas de estilo personalizadas: Diseño Editorial y Tema SynthWave '84 -->
+  <link rel="stylesheet" href="css/style.css?v=20261023-1">
+  <link rel="stylesheet" href="css/synthwave.css?v=20261023-1">
+</head>
+
+<body>
+
+  <!-- Capa de superposición para líneas de escaneo CRT en modo SynthWave -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- ==============================================================================
+   * CAPA DE ATENUACIÓN DE BRILLO (PAGE DIM OVERLAY)
+   * Esta capa translúcida oscura se desvanece suavemente sobre la página entera
+   * cuando el modo SynthWave '84 está activo, simulando un "apagado de luces"
+   * cinematográfico. Es controlada exclusivamente por CSS (sin JavaScript extra).
+   * ============================================================================== -->
+  <div id="dimOverlay" class="dim-overlay" aria-hidden="true"></div>
+
+  <!-- ==============================================================================
+   * BARRA DE NAVEGACIÓN PRINCIPAL (DISEÑO AUTÉNTICO SEBASTIAN GIRALDO)
+   * ============================================================================== -->
+  <header class="site-navbar">
+    <nav class="container d-flex align-items-center justify-content-between" aria-label="Navegación principal">
+      <!-- Marca Izquierda: Logotipo geométrico triangular + Menú -->
+      <div class="d-flex align-items-center gap-3">
+        <a href="#inicio" class="brand-triangle-wrapper" title="Inicio - Sebastian Giraldo">
+          <svg class="brand-triangle-svg" viewBox="0 0 54 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="Logotipo geométrico Sebastian Giraldo">
+            <!-- Sombra / Base cian inferior -->
+            <polygon points="4,38 32,38 18,14" fill="#38bdf8" opacity="0.65" />
+            <!-- Triángulo principal en púrpura -->
+            <polygon points="12,32 46,32 29,6" stroke="#6929f0" stroke-width="3.5" fill="none"
+              stroke-linejoin="round" />
+            <!-- Línea interna de perspectiva isométrica -->
+            <line x1="29" y1="6" x2="29" y2="32" stroke="#6929f0" stroke-width="2.5" />
+          </svg>
+        </a>
+
+        <!-- Botón Menú que abre la terminal / panel de navegación -->
+        <span class="brand-menu-label" data-bs-toggle="offcanvas" data-bs-target="#terminalOffcanvas" role="button"
+          title="Abrir Menú y Terminal (Atajo: tecla /)">
+          MENÚ
+        </span>
+      </div>
+
+      <!-- Controles de Utilidad Central: Audio y Tema (con grupo de píldoras estilizadas) -->
+      <div class="nav-controls-group">
+        <!-- Botón de control de audio: alterna el sintetizador Web Audio API -->
+        <button id="audioToggleBtn" class="btn-control-pill" type="button"
+          title="Alternar audio sintetizado Web Audio API" aria-pressed="false" aria-label="Activar o desactivar audio">
+          <i class="bi bi-volume-mute-fill"></i>
+          <span class="btn-pill-label">Sonido: OFF</span>
+        </button>
+
+        <!-- Separador vertical decorativo entre botones -->
+        <span class="nav-controls-divider" aria-hidden="true"></span>
+
+        <!-- Botón de tema: alterna entre modo editorial y SynthWave '84 -->
+        <button id="themeToggleBtn" class="btn-control-pill" type="button" title="Alternar tema SynthWave '84"
+          aria-pressed="false" aria-label="Cambiar tema visual">
+          <i class="bi bi-moon-stars-fill"></i>
+          <span class="btn-pill-label">SynthWave '84</span>
+        </button>
+      </div>
+
+      <!-- Botón Derecho: CONTRÁTAME abre el modal de contacto -->
+      <div>
+        <button type="button" class="btn-hire-me" id="openContactModalBtn" data-bs-toggle="modal"
+          data-bs-target="#contactModal" title="Hablemos de tu proyecto">
+          <span class="speech-icon-circle" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="#6929f0">
+              <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12z" />
+            </svg>
+          </span>
+          <span>CONTRÁTAME</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==============================================================================
+   * SECCIÓN HERO AUTÉNTICA: PERSONAJE DUOTONO + BANDA RAYADA CIAN
+   * ============================================================================== -->
+  <main>
+    <section id="inicio" class="hero-section">
+      <!-- Banda horizontal con franjas diagonales cian detrás del personaje -->
+      <div class="hero-striped-band" aria-hidden="true"></div>
+
+      <!-- Texto vertical de metadatos en margen inferior izquierdo -->
+      <div class="hero-vertical-meta" aria-hidden="true">
+        ©MMXXVI. Gwneud yn Ne Cymru.
+      </div>
+
+      <!-- Guía animada de desplazamiento hacia abajo (S C R O L L) -->
+      <a href="#habilidades" class="hero-scroll-guide" title="Desplazarse a la siguiente sección">
+        <span>S C R O L L</span>
+        <div class="hero-scroll-line" aria-hidden="true"></div>
+      </a>
+
+      <div class="container position-relative" style="z-index: 2;">
+        <!-- row con flex-column-reverse en móvil para mostrar el personaje PRIMERO en teléfono -->
+        <div class="row align-items-center gy-4 gy-lg-0">
+          <!-- Columna de Texto: order-2 en móvil (aparece después del personaje), order-lg-1 en desktop -->
+          <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <h1 class="hero-sebas-heading">
+              <span class="hero-serif-line">Hola, mi</span>
+              <span class="hero-serif-line">nombre es</span>
+              <span class="hero-sebas-name">Sebas<span class="hero-period-dot">.</span></span>
+            </h1>
+
+            <p class="hero-subtitle-lead">
+              Soy un <strong>desarrollador creativo independiente</strong>
+            </p>
+
+            <!-- Botones de Acción: "Hablemos" abre el modal de contacto -->
+            <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
+              <button type="button" class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#contactModal"
+                id="heroContactBtn" aria-label="Abrir formulario de contacto">
+                <span>Hablemos de tu Proyecto</span>
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </button>
+              <a href="#proyectos" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold">
+                Ver Proyectos
+              </a>
+            </div>
+
+            <!-- HUD de Telemetría Reactiva Tornis -->
+            <div class="tornis-hud" id="tornisHud" aria-live="polite"
+              title="Telemetría en vivo del Viewport y Sensor de Cursor (Tornis Engine)">
+              <span class="status-indicator"></span>
+              <span class="telemetry-item">
+                <i class="bi bi-cursor-fill text-muted"></i>
+                <span>CURSOR:</span> <strong id="hudCoords" class="telemetry-val">0, 0</strong>
+              </span>
+              <span class="telemetry-item">
+                <i class="bi bi-speedometer2 text-muted"></i>
+                <span>VEL:</span> <strong id="hudVelocity" class="telemetry-val">0 px/s</strong>
+              </span>
+              <span class="telemetry-item">
+                <i class="bi bi-arrows-vertical text-muted"></i>
+                <span>SCROLL:</span> <strong id="hudScroll" class="telemetry-val">0 px</strong>
+              </span>
+              <span class="telemetry-item">
+                <i class="bi bi-display text-muted"></i>
+                <span>FPS:</span> <strong id="hudFps" class="telemetry-val">60 FPS</strong>
+              </span>
+            </div>
+          </div>
+
+          <!-- Columna del Personaje: order-1 en móvil (aparece primero), order-lg-2 en desktop -->
+          <div class="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
+            <div class="avatar-interactive-wrapper" id="avatarCard" title="¡Haz clic en mí o mueve el cursor!">
+              <!-- Bocadillo de diálogo dinámico que aparece al hacer clic -->
+              <div class="avatar-speech-bubble" id="avatarSpeech">
+                ¡Hola! Soy Sebas 👋
+              </div>
+
+              <!-- Ilustración SVG del personaje — viewBox comprimido para que el personaje llene todo el espacio sin márgenes vacíos -->
+              <svg id="avatarSvg" class="avatar-duotone-svg" viewBox="100 80 280 410" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="Ilustración vectorial interactiva de Sebastian Giraldo">
+                <defs>
+                  <!-- Patrón de puntos para la textura de barba/barbilla (halftone stippling) -->
+                  <pattern id="stippleDots" width="6" height="6" patternUnits="userSpaceOnUse">
+                    <circle cx="3" cy="3" r="1.3" fill="#38bdf8" />
+                  </pattern>
+                </defs>
+
+                <!-- ==========================================
+                     CAPA 1: Hombros y Camiseta (T-Shirt)
+                     ========================================== -->
+                <g id="avatar-torso" class="avatar-layer">
+                  <!-- Sombra offset cian de la camiseta -->
+                  <path d="M 121 474 C 121 429, 166 399, 201 394 L 271 394 C 306 399, 351 429, 351 474" fill="none"
+                    stroke="#38bdf8" stroke-width="4.5" stroke-linejoin="round" />
+
+                  <!-- Camiseta negra con borde de acento -->
+                  <path d="M 125 470 C 125 425, 170 395, 205 390 L 275 390 C 310 395, 355 425, 355 470" fill="#171923"
+                    stroke="#6929f0" stroke-width="4.5" stroke-linejoin="round" />
+
+                  <!-- Cuello de la camiseta (Scoop neck) -->
+                  <path d="M 205 390 Q 240 424 275 390" fill="none" stroke="#6929f0" stroke-width="4"
+                    stroke-linecap="round" />
+                </g>
+
+                <!-- ==========================================
+                     CAPA 2: Cuello, Cabeza, Orejas, Rostro
+                     ========================================== -->
+                <g id="avatar-head" class="avatar-layer">
+                  <!-- Cuello en tono de piel -->
+                  <path d="M 205 348 L 205 390 Q 240 405 275 390 L 275 348" fill="#9a5b3f" stroke="#6929f0"
+                    stroke-width="4" />
+
+                  <!-- Pliegue anatómico en el cuello -->
+                  <path d="M 226 364 Q 240 370 254 364" stroke="#6929f0" stroke-width="3" stroke-linecap="round"
+                    fill="none" />
+
+                  <!-- Contorno de rostro -->
+                  <path d="M 164 224 C 164 296, 186 350, 240 352 C 294 350, 316 296, 316 224" fill="none"
+                    stroke="#a9684b" stroke-width="3" stroke-linecap="round" />
+
+                  <!-- Rostro en tono cálido -->
+                  <path d="M 168 220 C 168 294, 190 348, 240 350 C 290 348, 312 294, 312 220 Z"
+                    fill="#9a5b3f" />
+                  <path d="M 168 220 C 168 294, 190 348, 240 350 C 290 348, 312 294, 312 220"
+                    fill="none" stroke="#633d31" stroke-width="3.5" stroke-linejoin="round" />
+
+                  <!-- Oreja Izquierda con doble trazo (Cian + Púrpura) -->
+                  <path d="M 166 226 C 146 226, 144 268, 166 270" fill="none" stroke="#a9684b" stroke-width="3.5"
+                    stroke-linecap="round" />
+                  <path d="M 170 222 C 150 222, 148 264, 170 266" fill="#9a5b3f" stroke="#633d31" stroke-width="3"
+                    stroke-linecap="round" />
+                  <!-- Remolino interior oreja izquierda -->
+                  <path d="M 158 244 Q 152 238 160 234 Q 166 234 163 246 Q 160 250 154 246" fill="none" stroke="#633d31"
+                    stroke-width="2.5" stroke-linecap="round" />
+
+                  <!-- Oreja Derecha con doble trazo -->
+                  <path d="M 314 226 C 334 226, 336 268, 314 270" fill="none" stroke="#a9684b" stroke-width="3.5"
+                    stroke-linecap="round" />
+                  <path d="M 310 222 C 330 222, 332 264, 310 266" fill="#9a5b3f" stroke="#633d31" stroke-width="3"
+                    stroke-linecap="round" />
+                  <!-- Remolino interior oreja derecha -->
+                  <path d="M 322 244 Q 328 238 320 234 Q 314 234 317 246 Q 320 250 326 246" fill="none" stroke="#633d31"
+                    stroke-width="2.5" stroke-linecap="round" />
+                  <circle cx="319" cy="260" r="3.5" fill="#d9d5ce" stroke="#633d31" stroke-width="1.5"/>
+
+                  <!-- Sombra sutil de barba y bigote -->
+                  <path d="M 190 286 Q 205 281 220 287 M 260 287 Q 275 281 290 286
+                    M 202 314 Q 240 329 278 314 M 211 336 Q 240 345 269 336"
+                    fill="none" stroke="#57372c" stroke-width="2.4" stroke-linecap="round" opacity=".72" />
+                  <g fill="#57372c" opacity=".58" aria-hidden="true">
+                    <circle cx="190" cy="286" r="1.2"/><circle cx="198" cy="291" r="1.1"/>
+                    <circle cx="207" cy="294" r="1.2"/><circle cx="217" cy="292" r="1"/>
+                    <circle cx="263" cy="292" r="1"/><circle cx="273" cy="294" r="1.2"/>
+                    <circle cx="282" cy="291" r="1.1"/><circle cx="290" cy="286" r="1.2"/>
+                    <circle cx="216" cy="335" r="1"/><circle cx="226" cy="339" r="1"/>
+                    <circle cx="240" cy="341" r="1.1"/><circle cx="254" cy="339" r="1"/>
+                    <circle cx="264" cy="335" r="1"/>
+                  </g>
+
+                  <!-- Labios más definidos -->
+                  <path d="M 207 306 Q 225 300 240 305 Q 255 300 273 306 Q 258 318 240 318 Q 222 318 207 306 Z"
+                    fill="#754044" opacity=".9"/>
+                  <path id="avatar-mouth" d="M 209 307 Q 240 317 271 307" stroke="#542f33" stroke-width="2.5"
+                    stroke-linecap="round" fill="none" />
+
+                  <!-- Nariz más ancha y suave -->
+                  <path d="M 231 218 Q 229 251 218 270 Q 215 280 228 283 Q 240 288 252 281 Q 263 278 255 269 Q 246 254 245 218"
+                    fill="#a9684b" stroke="#784632" stroke-width="2.5" stroke-linejoin="round" />
+                  <path d="M 222 278 Q 228 282 234 279 M 247 279 Q 253 282 258 277"
+                    fill="none" stroke="#613b30" stroke-width="2" stroke-linecap="round" />
+
+                  <!-- Ojos Circulares (Base blanca con contorno púrpura) -->
+                  <g id="avatar-eyes">
+                    <!-- Ojo Izquierdo -->
+                    <path d="M 181 235 Q 196 224 211 235 Q 196 247 181 235 Z" fill="#f4d7bd" stroke="#30211d" stroke-width="2.5"/>
+                    <!-- Ojo Derecho -->
+                    <path d="M 269 235 Q 284 224 299 235 Q 284 247 269 235 Z" fill="#f4d7bd" stroke="#30211d" stroke-width="2.5"/>
+
+                    <!-- Pupila Izquierda Interactiva que sigue el cursor -->
+                    <g id="avatar-pupil-left" class="avatar-pupil">
+                      <circle cx="196" cy="235" r="5.5" fill="#241714" />
+                      <circle cx="194" cy="233" r="1.7" fill="#ffffff" />
+                    </g>
+
+                    <!-- Pupila Derecha Interactiva que sigue el cursor -->
+                    <g id="avatar-pupil-right" class="avatar-pupil">
+                      <circle cx="284" cy="235" r="5.5" fill="#241714" />
+                      <circle cx="282" cy="233" r="1.7" fill="#ffffff" />
+                    </g>
+                  </g>
+                </g>
+
+                <!-- Cejas parcialmente cubiertas por el flequillo -->
+                <g id="avatar-eyebrows" class="avatar-layer">
+                  <path d="M 178 207 Q 194 195 218 202" fill="none" stroke="#30211d" stroke-width="7" stroke-linecap="round"/>
+                  <path d="M 262 202 Q 286 195 302 207" fill="none" stroke="#30211d" stroke-width="7" stroke-linecap="round"/>
+                </g>
+
+                <!-- Rizos tipo twists con flequillo sobre la frente -->
+                <g id="avatar-hair" class="avatar-layer">
+                  <path d="M 168 226 C 160 201 162 163 177 137 C 192 108 216 97 242 101
+                    C 274 97 302 116 316 146 C 328 174 322 205 312 226
+                    Q 303 218 298 206 Q 291 220 283 225 Q 276 218 273 204
+                    Q 264 221 255 227 Q 247 220 245 205 Q 235 224 225 229
+                    Q 217 222 216 207 Q 205 225 195 228 Q 187 220 187 207
+                    Q 179 222 168 226 Z"
+                    fill="#171517" stroke="#30211d" stroke-width="4" stroke-linejoin="round"/>
+                  <g fill="none" stroke="#30211d" stroke-width="9" stroke-linecap="round">
+                    <path d="M 179 147 C 168 160 187 170 178 184 C 170 197 188 205 181 217 Q 179 222 184 223"/>
+                    <path d="M 197 127 C 184 142 204 153 194 168 C 185 182 203 191 196 207 Q 194 215 200 219"/>
+                    <path d="M 216 112 C 204 128 225 140 214 155 C 204 170 224 180 214 196 Q 210 207 218 216"/>
+                    <path d="M 237 107 C 224 123 246 134 235 150 C 224 166 244 177 233 193 Q 227 205 237 216"/>
+                    <path d="M 259 109 C 247 125 269 137 258 153 C 247 169 267 181 256 197 Q 250 208 261 219"/>
+                    <path d="M 280 120 C 269 136 291 148 280 164 C 269 180 288 191 279 207 Q 274 216 284 221"/>
+                    <path d="M 299 139 C 289 153 309 166 300 181 C 292 194 307 204 300 215 Q 298 220 303 222"/>
+                  </g>
+                  <g fill="none" stroke="#76503b" stroke-width="2.2" stroke-linecap="round">
+                    <path d="M 179 147 C 168 160 187 170 178 184 C 170 197 188 205 181 217"/>
+                    <path d="M 197 127 C 184 142 204 153 194 168 C 185 182 203 191 196 207"/>
+                    <path d="M 216 112 C 204 128 225 140 214 155 C 204 170 224 180 214 196"/>
+                    <path d="M 237 107 C 224 123 246 134 235 150 C 224 166 244 177 233 193"/>
+                    <path d="M 259 109 C 247 125 269 137 258 153 C 247 169 267 181 256 197"/>
+                    <path d="M 280 120 C 269 136 291 148 280 164 C 269 180 288 191 279 207"/>
+                    <path d="M 299 139 C 289 153 309 166 300 181 C 292 194 307 204 300 215"/>
+                  </g>
+                </g>
+
+                <!-- ==========================================
+                     CAPA 5: Gafas de Pasta Icónicas (Glasses - Parallax 3D)
+                     ========================================== -->
+                <g id="avatar-glasses" class="avatar-layer" aria-hidden="true"></g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+     * SECCIÓN: STACK TECNOLÓGICO (6 LENGUAJES Y HERRAMIENTAS REQUERIDAS)
+     * ============================================================================== -->
+    <section id="habilidades" class="section-padding bg-light bg-opacity-50">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="section-tag">Dominio Técnico</span>
+          <h2 class="section-heading">Arquitectura & Tecnologías</h2>
+          <p class="section-desc mx-auto">
+            La integración perfecta de frontend cinemático, utilidades responsivas y microservicios robustos de backend.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <!-- 1. HTML5 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge" style="background: linear-gradient(135deg, #e34f26, #f06529);">
+                    <i class="bi bi-filetype-html"></i>
+                  </div>
+                  <span class="skill-score">96%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">HTML5 Semántico</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Estructuración accesible (WCAG AAA), manipulación de Canvas, integración de Web APIs nativas y
+                  gráficos SVG multicapa.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 96%; background: #e34f26;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. CSS3 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge" style="background: linear-gradient(135deg, #264de4, #2965f1);">
+                    <i class="bi bi-filetype-css"></i>
+                  </div>
+                  <span class="skill-score">98%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">CSS3 Moderno</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Variables CSS3 (Custom Properties), transformaciones 3D con perspectiva, efectos de brillo SynthWave
+                  neón y animaciones fluidas a 60fps.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 98%; background: #264de4;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. JavaScript -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge"
+                    style="background: linear-gradient(135deg, #f7df1e, #d4be10); color: #1a202c;">
+                    <i class="bi bi-filetype-js"></i>
+                  </div>
+                  <span class="skill-score">95%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">JavaScript (ES6+)</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Matemáticas de interpolación (Lerp), arquitectura reactiva inspirada en Tornis, síntesis con Web Audio
+                  API y renderizado asíncrono.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 95%; background: #f7df1e;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Bootstrap 5 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge" style="background: linear-gradient(135deg, #7952b3, #563d7c);">
+                    <i class="bi bi-bootstrap-fill"></i>
+                  </div>
+                  <span class="skill-score">94%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">Bootstrap 5</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Sistemas de cuadrícula adaptativos, personalización profunda de utilidades, ventanas modales
+                  accesibles y paneles Offcanvas fluidos.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 94%; background: #7952b3;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. PHP 8 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge" style="background: linear-gradient(135deg, #8892be, #4f5b93);">
+                    <i class="bi bi-filetype-php"></i>
+                  </div>
+                  <span class="skill-score">90%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">PHP 8+</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Creación de APIs REST seguras, procesamiento de formularios con sanitización estricta, protección
+                  contra ataques CSRF y renderizado del servidor.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 90%; background: #4f5b93;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Python 3 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="skill-card">
+              <div>
+                <div class="skill-header">
+                  <div class="skill-icon-badge" style="background: linear-gradient(135deg, #3776ab, #ffd43b);">
+                    <i class="bi bi-filetype-py"></i>
+                  </div>
+                  <span class="skill-score">92%</span>
+                </div>
+                <h3 class="h5 fw-bold mb-2">Python 3</h3>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                  Microservicios HTTP ultraligeros sin dependencias externas, análisis de árboles sintácticos (AST),
+                  telemetría de código y herramientas CLI.
+                </p>
+              </div>
+              <div class="skill-progress-track">
+                <div class="skill-progress-bar" style="width: 92%; background: #3776ab;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+     * SECCIÓN: PROYECTOS DESTACADOS & OPEN SOURCE (WORK)
+     * ============================================================================== -->
+    <section id="proyectos" class="section-padding">
+      <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+          <div>
+            <span class="section-tag">Trabajos & Código Abierto</span>
+            <h2 class="section-heading mb-1">Proyectos Seleccionados</h2>
+            <p class="text-muted mb-0">Herramientas creativas, bibliotecas del viewport y arquitecturas híbridas.</p>
+          </div>
+
+          <!-- Filtros de categoría interactivos -->
+          <div class="filter-pill-group mt-3 mt-md-0" role="group" aria-label="Filtro de proyectos">
+            <button class="filter-pill active" data-filter="all">Todos</button>
+            <button class="filter-pill" data-filter="creative">Frontend Creativo</button>
+            <button class="filter-pill" data-filter="fullstack">Full-Stack</button>
+            <button class="filter-pill" data-filter="python">Python</button>
+          </div>
+        </div>
+
+        <!-- Cuadrícula dinámica donde se inyectan las tarjetas de proyectos mediante JS -->
+        <div class="row" id="projectsGrid">
+          <!-- Se cargan automáticamente con projects.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+     * SECCIÓN: SOBRE MÍ (FILOSOFÍA CREATIVA SEBASTIAN GIRALDO)
+     * ============================================================================== -->
+    <section id="sobre-mi" class="section-padding bg-light bg-opacity-50">
+      <div class="container">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-6">
+            <span class="section-tag">Filosofía & Trayectoria</span>
+            <h2 class="section-heading">Construyendo la web con audacia y empatía</h2>
+            <p class="lead text-dark mb-4">
+              "Ayudo a personas y organizaciones a construir proyectos web ambiciosos pero accesibles. Cuanto más
+              salvajes y experimentales, mejor."
+            </p>
+            <p class="text-muted">
+              Mi trabajo vive en la intersección entre la ingeniería de software estricta y el diseño de interacción
+              experimental. Creo firmemente que la web moderna no tiene por qué ser aburrida ni uniforme: podemos crear
+              experiencias visualmente cautivadoras manteniendo un rendimiento de 60 cuadros por segundo y respeto
+              absoluto por la accesibilidad.
+            </p>
+            <div class="d-flex gap-3 mt-4">
+              <a href="https://github.com/Yamato0921" target="_blank" rel="noopener noreferrer"
+                class="btn btn-outline-dark rounded-pill px-3 py-2 fw-semibold">
+                <i class="bi bi-github me-1"></i> Perfil de GitHub
+              </a>
+              <button class="btn btn-dark rounded-pill px-3 py-2 fw-semibold" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#terminalOffcanvas">
+                <i class="bi bi-terminal me-1"></i> Explorar en Terminal
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="p-4 p-md-5 bg-white rounded-4 border shadow-sm">
+              <h3 class="h5 fw-bold mb-3"><i class="bi bi-quote text-primary me-2"></i>Principios de Desarrollo</h3>
+              <ul class="list-unstyled mb-0">
+                <li class="mb-3 d-flex align-items-start gap-2">
+                  <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                  <div>
+                    <strong>Rendimiento sin concesiones:</strong> Las animaciones complejas deben ejecutarse a 60 FPS
+                    continuos mediante requestAnimationFrame y aceleración por GPU.
+                  </div>
+                </li>
+                <li class="mb-3 d-flex align-items-start gap-2">
+                  <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                  <div>
+                    <strong>Estética de autor:</strong> Identidad visual inconfundible, combinando minimalismo editorial
+                    suizo con el brillo retro-futurista de los años 80.
+                  </div>
+                </li>
+                <li class="d-flex align-items-start gap-2">
+                  <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                  <div>
+                    <strong>Arquitectura Híbrida:</strong> Respaldo seguro con PHP y microservicios autónomos en Python
+                    comunicados mediante APIs REST limpias.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================================================
+   * MODAL DE CONTACTO — Ventana emergente premium (Bootstrap 5 + CSS personalizado)
+   * Se abre desde: botón "Hablemos de tu Proyecto" y botón "CONTRÁTAME" del navbar
+   * ============================================================================== -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content contact-modal-content">
+
+        <!-- Cabecera del Modal con gradiente editorial -->
+        <div class="contact-modal-header">
+          <!-- Botón de cierre en la esquina superior derecha -->
+          <button type="button" class="contact-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+          <!-- Etiqueta de sección -->
+          <span class="contact-modal-tag">Iniciemos una Conversación</span>
+          <h2 class="contact-modal-title" id="contactModalLabel">¿Tienes un proyecto en mente?</h2>
+          <p class="contact-modal-subtitle">
+            Escríbeme para colaborar en proyectos creativos, sitios web experimentales o arquitecturas a medida.
+          </p>
+
+          <!-- Canales de contacto rápido -->
+          <div class="contact-quick-links">
+            <a href="mailto:sebastiangiraldocorpas@gmail.com" class="contact-quick-link">
+              <i class="bi bi-envelope-fill"></i>
+              <span>sebastiangiraldocorpas@gmail.com</span>
+            </a>
+            <a href="https://github.com/Yamato0921" target="_blank" rel="noopener noreferrer" class="contact-quick-link">
+              <i class="bi bi-github"></i>
+              <span>github.com/Yamato0921</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cuerpo del modal: formulario de contacto completo -->
+        <div class="contact-modal-body">
+          <form id="contactForm" novalidate>
+            <!-- Campo trampa (Honeypot) oculto contra bots de spam -->
+            <div style="display:none;" aria-hidden="true">
+              <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="row g-3">
+              <!-- Campo: Nombre -->
+              <div class="col-md-6">
+                <label for="contactName" class="contact-label">Tu Nombre <span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-custom" id="contactName" name="name" required
+                  placeholder="Ej. Tu nombre">
+              </div>
+
+              <!-- Campo: Correo Electrónico -->
+              <div class="col-md-6">
+                <label for="contactEmail" class="contact-label">Correo Electrónico <span
+                    class="text-danger">*</span></label>
+                <input type="email" class="form-control form-control-custom" id="contactEmail" name="email" required
+                  placeholder="tu-correo@ejemplo.com">
+              </div>
+
+              <!-- Campo: Asunto del Proyecto -->
+              <div class="col-12">
+                <label for="contactSubject" class="contact-label">Asunto del Proyecto</label>
+                <input type="text" class="form-control form-control-custom" id="contactSubject" name="subject"
+                  placeholder="Ej. Sitio interactivo con WebGL y PHP">
+              </div>
+
+              <!-- Campo: Mensaje detallado -->
+              <div class="col-12">
+                <label for="contactMessage" class="contact-label">Mensaje <span class="text-danger">*</span></label>
+                <textarea class="form-control form-control-custom" id="contactMessage" name="message" rows="4" required
+                  placeholder="Cuéntame sobre los objetivos, alcance y plazos de tu proyecto..."></textarea>
+              </div>
+
+              <!-- Botón de envío y estado de respuesta -->
+              <div class="col-12">
+                <div class="contact-modal-footer-inner">
+                  <button type="submit" class="btn-primary-custom" id="contactSubmitBtn">
+                    <span>Enviar Mensaje</span>
+                    <i class="bi bi-send-fill" aria-hidden="true"></i>
+                  </button>
+                  <p class="contact-privacy-note">
+                    <i class="bi bi-shield-lock-fill me-1"></i>
+                    Tus datos están seguros. Sin spam.
+                  </p>
+                </div>
+                <!-- Contenedor dinámico de alertas de respuesta -->
+                <div id="contactStatus" class="mt-3"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+   * CAJÓN OFFCANVAS DE TERMINAL INTERACTIVA (BOOTSTRAP 5)
+   * ============================================================================== -->
+  <aside class="offcanvas offcanvas-end terminal-offcanvas w-50" tabindex="-1" id="terminalOffcanvas"
+    aria-labelledby="terminalOffcanvasLabel">
+    <!-- Cabecera de la terminal con luces de estilo consola -->
+    <div class="terminal-header">
+      <div class="terminal-traffic-lights">
+        <span class="traffic-light red" data-bs-dismiss="offcanvas" title="Cerrar terminal" role="button"></span>
+        <span class="traffic-light yellow" title="Minimizar"></span>
+        <span class="traffic-light green" title="Expandir"></span>
+      </div>
+      <div class="terminal-window-title">
+        <span id="terminalOffcanvasLabel">sebas@portfolio: ~</span>
+        <span class="terminal-status"><span></span> en línea</span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+
+    <!-- Cuerpo con historial de comandos -->
+    <div class="terminal-body" id="terminalOutput">
+      <!-- Se inyecta con terminal.js -->
+    </div>
+
+    <!-- Fila de entrada de texto interactiva -->
+    <div class="terminal-input-row">
+      <span class="terminal-prompt">$</span>
+      <input type="text" id="terminalInput" class="terminal-input" placeholder="Escribe 'ayuda' y presiona Enter..."
+        autocomplete="off" spellcheck="false">
+    </div>
+  </aside>
+
+  <!-- ==============================================================================
+   * VENTANA MODAL PARA DETALLES DE PROYECTO (BOOTSTRAP 5)
+   * ============================================================================== -->
+  <div class="modal fade" id="projectDetailModal" tabindex="-1" aria-labelledby="modalProjectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="modal-header border-bottom bg-light">
+          <div>
+            <h3 class="modal-title h5 fw-bold" id="modalProjectTitle">Detalles del Proyecto</h3>
+            <p class="text-muted small mb-0" id="modalProjectSubtitle">Subtítulo del proyecto</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body p-4">
+          <p id="modalProjectDescription" class="lead fs-6 mb-4 text-secondary"></p>
+
+          <h4 class="h6 fw-bold text-uppercase text-muted mb-2" style="letter-spacing: 0.05em;">Métricas Clave:</h4>
+          <div class="row g-2 mb-4" id="modalProjectMetrics"></div>
+
+          <h4 class="h6 fw-bold text-uppercase text-muted mb-2" style="letter-spacing: 0.05em;">Características
+            Principales:</h4>
+          <ul class="list-unstyled mb-4" id="modalProjectFeatures"></ul>
+
+          <h4 class="h6 fw-bold text-uppercase text-muted mb-2" style="letter-spacing: 0.05em;">Tecnologías Utilizadas:
+          </h4>
+          <div id="modalProjectTags" class="d-flex flex-wrap gap-1"></div>
+        </div>
+
+        <div class="modal-footer border-top bg-light">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+   * PIE DE PÁGINA (FOOTER)
+   * ============================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row align-items-center gy-3">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="mb-1 fw-bold text-dark">Sebastian Giraldo | Creative Developer</p>
+          <p class="mb-0 small text-muted">
+            Diseñado y desarrollado por Sebastian Giraldo con HTML5, CSS3, JS, PHP, Bootstrap 5 y Python.
+          </p>
+        </div>
+
+        <div class="col-md-6 text-center text-md-end">
+          <div class="d-inline-flex gap-3">
+            <a href="https://github.com/Yamato0921" target="_blank" rel="noopener noreferrer" class="text-muted" title="GitHub">
+              <i class="bi bi-github fs-5"></i>
+            </a>
+            <a href="mailto:sebastiangiraldocorpas@gmail.com" class="text-muted" title="Correo Electrónico">
+              <i class="bi bi-envelope-fill fs-5"></i>
+            </a>
+            <a href="#inicio" class="text-muted" title="Volver arriba">
+              <i class="bi bi-arrow-up-circle-fill fs-5"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==============================================================================
+   * SCRIPTS JAVASCRIPT: BOOTSTRAP 5 Y MÓDULOS DE INTERACCIÓN
+   * ============================================================================== -->
+  <!-- Bootstrap 5 Bundle (incluye Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Sintetizador de audio analógico (Web Audio API) -->
+  <script src="js/audio.js"></script>
+
+  <!-- Motor de telemetría del viewport Tornis -->
+  <script src="js/viewport-tracker.js"></script>
+
+  <!-- Avatar vectorial interactivo con seguimiento del cursor -->
+  <script src="js/avatar.js"></script>
+
+  <!-- Terminal interactiva para desarrolladores -->
+  <script src="js/terminal.js?v=20261023-1"></script>
+
+  <!-- Gestor de proyectos y casos de estudio -->
+  <script src="js/projects.js"></script>
+
+  <!-- Controlador principal de la aplicación -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>
